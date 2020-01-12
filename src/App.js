@@ -180,12 +180,12 @@ function App() {
     }
     error.name = error.surname = error.email = error.birthday = error.gender = false;
     setError(error);
-    setEditMode(true);
     setName(member.name);
     setSurname(member.surname);
     setBirthday(member.birthday);
     setEmail(member.email);
     setGender(member.gender);
+    setEditMode(true);
   }
   function cancelEditing(){
     setEditMode(false);
