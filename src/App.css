@@ -8,6 +8,14 @@ th{
   color: rgb(255, 89, 6);
   cursor: pointer;
 }
+th:active{
+  background-color: rgb(255, 148, 95);
+  color: white;
+}
+.activeTh{
+  background-color: rgb(255, 148, 95);
+  color: white;
+}
 tr{
   background-color: rgb(255, 134, 74);
 }

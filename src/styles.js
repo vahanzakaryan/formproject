@@ -57,7 +57,7 @@ const styles = makeStyles({
         color:'white'
     },
     birthDayError:{
-        marginLeft:'6%',
+        marginLeft:'4%',
         color:'red'
     },
 

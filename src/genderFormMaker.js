@@ -8,13 +8,10 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 function GenderForm(props){
     const {updater, value} = props;
-    const handleChange = event => {
-    updater(event.target.value);
-  };
     return (
         <FormControl component="fieldset" error={false}>
         <FormLabel component="legend"><span style={{marginLeft:'26%'}}>Gender</span></FormLabel >
-        <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+        <RadioGroup aria-label="gender" name="gender1" value={value} onChange={updater}>
           <FormControlLabel
             value="female"
             control={<Radio color="secondary" />}

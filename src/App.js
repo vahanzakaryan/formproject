@@ -18,6 +18,7 @@ function App() {
   const [birthday, setBirthday] = useState(localStorage.getItem('birthday'));
   const [editMode, setEditMode] = useState(false);
   const [editArray, setEditArray] = useState(false);
+  const [editItem, setEditItem] = useState({});
   const [error, setError] = useState({});
   const [members, setMembers] = useState([
     {id: 1, name: "Aram", surname: "Hovhannisyan", email: "aramhovhannisyan@gmail.com", gender: "male", birthday:'1997-04-16'},
@@ -30,6 +31,10 @@ function App() {
   const nameUpdater = event => (
     setName(event.target.value),
     localStorage.setItem('name', event.target.value)
+  );
+  const genderUpdater = event => (
+    setGender(event.target.value),
+    localStorage.setItem('gender', event.target.value)
   );
   const surnameUpdater = event => (
     setSurname(event.target.value),
@@ -90,6 +95,10 @@ function App() {
     })
     setMembers(newMembers);
   }
+  function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
   function addMember(){
     let isFailed = false;
     if(name.length > 12 || name.length < 3){
@@ -104,14 +113,55 @@ function App() {
     }else{
       error.surname = false;
     }
-    if(!birthday){
+    if(!birthday || getAge(birthday) < 18){
       error.birthday = true;
       isFailed = true;
     }else{
       error.birthday = false;
     }
+    if(!validateEmail(email)){
+      error.email = true;
+      isFailed = true;
+    }else{
+      error.email = false;
+    }
+    setEditArray(!editArray);
     setError(error);
-    console.log(error);
+
+    if(!localStorage.getItem('id')){
+      localStorage.setItem('id',6);
+    }
+    if(!isFailed){
+      if(!editMode){
+        localStorage.setItem('name','');
+        localStorage.setItem('surname','');
+        localStorage.setItem('email','');
+        localStorage.setItem('birthday','');
+        localStorage.setItem('gender','');
+        members.push({id: localStorage.getItem('id'), name: name, surname: surname, email: email, birthday: birthday, gender: gender});
+        setMembers(members);
+        setEditArray(!editArray);
+        let nextId = +localStorage.getItem('id') + 1;
+        localStorage.setItem('id', nextId);
+      }else{
+        let newMembers = members.map(function(member){
+          if(member.id === editItem.id){
+            member.name = name;
+            member.surname = surname;
+            member.birthday = birthday;
+            member.gender = gender;
+          }
+          return member;
+        });
+        setMembers(newMembers);
+        setEditMode(false);
+      }
+      setName('');
+      setSurname('');
+      setBirthday('');
+      setGender('');
+      setEmail('');
+    }
   }
   document.body.onkeydown = (event) => {
     if(event.keyCode === 13){
@@ -119,14 +169,17 @@ function App() {
     }
   }
   function enterEditMode(member){
+    setEditItem(member);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if(!editMode){
-      localStorage.setItem('name', name);
-      localStorage.setItem('surname', surname);
-      localStorage.setItem('email', email);
-      localStorage.setItem('gender', gender);
-      localStorage.setItem('birthday', birthday);
+      setName(member.name);
+      setSurname(member.surname);
+      setEmail(member.email);
+      setGender(member.gender);
+      setBirthday(member.birthday);
     }
+    error.name = error.surname = error.email = error.birthday = error.gender = false;
+    setError(error);
     setEditMode(true);
     setName(member.name);
     setSurname(member.surname);
@@ -220,15 +273,15 @@ function App() {
           Birthday
         </span>
         <span className={classes.birthDayError}>
-          {error.birthday ? "Set your birthday" : ""}
+          {error.birthday ? "Age starting from 18" : ""}
         </span>
       </div>
       <div className={classes.emailDiv}>
-        <CreateTextfield outline="E-mail" text={email} onChangeEvent = {emailUpdater}/>
+        <CreateTextfield outline="E-mail" text={email} onChangeEvent = {emailUpdater} error = {error.email} helpertext = {"Enter valid email"}/>
         <DatePicker value = {birthday} updater = {birthdayUpdater} maxDate = {getCurrentDate()}/>
       </div>
       <div className={classes.genderDiv}>
-        <GenderForm value = {gender} updater = {setGender}/>
+        <GenderForm value = {gender} updater = {genderUpdater}/>
       </div>
       <div className={classes.submitDiv}>
         <SubmitButton isDisabled={!(name && surname && birthday && gender && email)} name = {editMode ? "Save" : "Add"} buttFunc = {addMember}/>

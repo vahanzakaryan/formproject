@@ -8,6 +8,7 @@ function SubmitButton(props){
             variant="contained" 
             size='large'
             color = {name === 'Cancel' ? 'secondary' : 'primary'}
+            style = {name === 'Cancel' ? {marginLeft:'-1.9%'} : {}}
             disabled={isDisabled}
             onClick = {buttFunc}
         >
