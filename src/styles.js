@@ -2,12 +2,13 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const styles = makeStyles({
     mainDiv:{
+        paddingBottom: '0px',
         backgroundColor: "white",
         opacity: "0.9",
         width: "70%",
         borderRadius: "10px",
         padding: "2% 5% 5% 5%",
-        marginLeft: "9.5%",
+        marginLeft: "14.3%",
         marginTop: "4%",
         boxShadow: "5px 3px 20px black",
         

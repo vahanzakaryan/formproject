@@ -8,32 +8,45 @@ import './App.css';
 
 function Table(props){
     const classes = styles();
-    const {members, getAge, memberDeleter, editMode, sortById, sortByName, sortBySurname, ageSortFunc, sortByGender, sortByEmail} = props;
+    const {members, getAge, memberDeleter, editMode, sortById, sortByName, sortBySurname, ageSortFunc, sortByGender, sortByEmail, activeElem} = props;
     return (
         <>
         {
             members.length ? <>
                 <table className = {classes.table}>
             <tr>
-                <th onClick = {sortById}>
+                <th 
+                    className = {activeElem === 'id' ? "activeTh" : ''}
+                    onClick = {sortById}
+                >
                     ID
                 </th>
-                <th onClick = {sortByName}>
+                <th 
+                    className = {activeElem === 'name' ? "activeTh" : ''}
+                    onClick = {sortByName}>
                     Name
                 </th>
-                <th onClick = {sortBySurname}>
+                <th 
+                    className = {activeElem === 'surname' ? "activeTh" : ''}
+                    onClick = {sortBySurname}>
                     Surname
                 </th>
-                <th onClick = {sortByEmail}>
+                <th 
+                    className = {activeElem === 'email' ? "activeTh" : ''}
+                    onClick = {sortByEmail}>
                     Email
                 </th>
-                <th onClick = {sortByGender}>
+                <th 
+                    className = {activeElem === 'gender' ? "activeTh" : ''}
+                    onClick = {sortByGender}>
                     Gender
                 </th>
-                <th onClick = {ageSortFunc}>
+                <th 
+                    className = {activeElem === 'age' ? "activeTh" : ''}
+                    onClick = {ageSortFunc}>
                     Age
                 </th>
-                <th>
+                <th style = {{cursor:'default'}}>
                     Actions
                 </th>
             </tr>

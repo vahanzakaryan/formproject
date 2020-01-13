@@ -20,6 +20,7 @@ function App() {
   const [editArray, setEditArray] = useState(false);
   const [editItem, setEditItem] = useState({});
   const [error, setError] = useState({});
+  const [activeElem, setActiveElem] = useState('id');
   const [members, setMembers] = useState([
     {id: 1, name: "Aram", surname: "Hovhannisyan", email: "aramhovhannisyan@gmail.com", gender: "male", birthday:'1997-04-16'},
     {id: 4, name: "David", surname: "Sargsyan", email: "davidsargsyan@gmail.com", gender: "male", birthday:'1994-04-04'},
@@ -200,7 +201,7 @@ function App() {
       return a.id - b.id;
     })
     setMembers(members);
-    setEditArray(!editArray);
+    setActiveElem('id');
   }
   function nameSortFunc(){
     members.sort(function(a,b){
@@ -212,7 +213,7 @@ function App() {
       return 0;
     })
     setMembers(members);
-    setEditArray(!editArray);
+    setActiveElem('name');
   }
   function surnameSortFunc(){
     members.sort(function(a,b){
@@ -224,7 +225,7 @@ function App() {
       return 0;
     })
     setMembers(members);
-    setEditArray(!editArray);
+    setActiveElem('surname');
   }
   function emailSortFunc(){
     members.sort(function(a,b){
@@ -236,7 +237,7 @@ function App() {
       return 0;
     })
     setMembers(members);
-    setEditArray(!editArray);
+    setActiveElem('email');
   }
   function genderSortFunc(){
     members.sort(function(a,b){
@@ -248,14 +249,14 @@ function App() {
       return 0;
     })
     setMembers(members);
-    setEditArray(!editArray);
+    setActiveElem('gender');
   }
   function ageSortFunc(){
     members.sort(function(a,b){
       return getAge(b.birthday) - getAge(a.birthday);
     })
     setMembers(members);
-    setEditArray(!editArray);
+    setActiveElem('age');
   }
   return (
     <div className = {classes.mainDiv}>
@@ -292,7 +293,7 @@ function App() {
         </div>
       </> : false}
       <div className = {classes.tableDiv}>
-        <Table members = {members} getAge = {getAge} memberDeleter = {deleteMember} editMode = {enterEditMode} sortById = {idSortFunc} sortByName = {nameSortFunc} sortBySurname = {surnameSortFunc} ageSortFunc = {ageSortFunc} sortByGender = {genderSortFunc} sortByEmail = {emailSortFunc}/>
+        <Table members = {members} getAge = {getAge} memberDeleter = {deleteMember} editMode = {enterEditMode} sortById = {idSortFunc} sortByName = {nameSortFunc} sortBySurname = {surnameSortFunc} ageSortFunc = {ageSortFunc} sortByGender = {genderSortFunc} sortByEmail = {emailSortFunc} activeElem = {activeElem}/>
       </div>
     </div>
   );
