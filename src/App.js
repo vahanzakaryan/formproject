@@ -7,6 +7,9 @@ import GenderForm from './genderFormMaker.js';
 import SubmitButton from './submitButton.js';
 import Table from './tableCreator.js'
 import './App.css';
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 function App() {
   const classes = styles();
@@ -18,6 +21,7 @@ function App() {
   const [birthday, setBirthday] = useState(localStorage.getItem('birthday'));
   const [editMode, setEditMode] = useState(false);
   const [editArray, setEditArray] = useState(false);
+  const [value, setValue] = React.useState(2);
   const [editItem, setEditItem] = useState({});
   const [error, setError] = useState({});
   const [activeElem, setActiveElem] = useState('id');
@@ -202,6 +206,7 @@ function App() {
     })
     setMembers(members);
     setActiveElem('id');
+    setEditArray(!editArray);
   }
   function nameSortFunc(){
     members.sort(function(a,b){
@@ -295,6 +300,7 @@ function App() {
       <div className = {classes.tableDiv}>
         <Table members = {members} getAge = {getAge} memberDeleter = {deleteMember} editMode = {enterEditMode} sortById = {idSortFunc} sortByName = {nameSortFunc} sortBySurname = {surnameSortFunc} ageSortFunc = {ageSortFunc} sortByGender = {genderSortFunc} sortByEmail = {emailSortFunc} activeElem = {activeElem}/>
       </div>
+      
     </div>
   );
 }

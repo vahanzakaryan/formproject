@@ -3,6 +3,8 @@ import {makeStyles} from '@material-ui/core/styles';
 const styles = makeStyles({
     mainDiv:{
         paddingBottom: '0px',
+        paddingLeft: '0px',
+        paddingRight: '0px',
         backgroundColor: "white",
         opacity: "0.9",
         width: "70%",
